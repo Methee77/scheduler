@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>My IP Checker</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; }
+        .card { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #1a73e8; font-size: 2.5rem; margin-bottom: 10px; }
+        p { color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <p>ที่อยู่ IP ของคุณคือ:</p>
+    <h1 id="ip">กำลังโหลด...</h1>
+    <p id="details">กำลังดึงข้อมูลตำแหน่ง...</p>
+</div>
+
+<script>
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('ip').textContent = data.ip;
+            document.getElementById('details').textContent = 
+                `${data.city}, ${data.region}, ${data.country_name} | ISP: ${data.org}`;
+        })
+        .catch(error => {
+            document.getElementById('ip').textContent = "เกิดข้อผิดพลาด";
+            console.error('Error:', error);
+        });
+</script>
+
+</body>
+</html>
